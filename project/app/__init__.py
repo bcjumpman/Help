@@ -17,6 +17,16 @@ login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
 
 
+@app.route('/api')
+def landing():
+    all_users = User.query.all()
+
+    users_list = [user.to_dict() for user in all_users]
+
+    data = {"Users": users_list}
+
+    return data
+
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
